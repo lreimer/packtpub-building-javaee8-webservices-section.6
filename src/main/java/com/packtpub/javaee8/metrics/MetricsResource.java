@@ -1,56 +1,49 @@
 package com.packtpub.javaee8.metrics;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.annotation.Counted;
-import com.codahale.metrics.annotation.Gauge;
-import com.codahale.metrics.annotation.Timed;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 @ApplicationScoped
 @Path("metrics")
 public class MetricsResource {
 
-    @Inject
-    private MetricRegistry metricRegistry;
-
     private Random random = new Random(4711L);
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response metrics() {
-        return Response.ok(metricRegistry.getMetrics()).build();
-    }
+    private AtomicLong poolSize = new AtomicLong(10);
 
     @POST
     @Path("/timed")
-    @Timed
+    @Timed(displayName = "Timed invocation", unit = "milliseconds")
     public Response timed() throws InterruptedException {
+        poolSize.incrementAndGet();
         TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
+        poolSize.decrementAndGet();
+
         return Response.noContent().build();
     }
 
-    @POST
-    @Path("/gauge")
-    @Gauge
-    public Response gauge() throws InterruptedException {
-        TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
-        return Response.noContent().build();
+    @Gauge(displayName = "Gauge invocation", unit = "seconds")
+    public long gauge() {
+        return poolSize.get();
     }
 
     @POST
     @Path("/counted")
-    @Counted
-    public Response counted() {
+    @Counted(monotonic = true)
+    public Response counted() throws InterruptedException {
+        poolSize.incrementAndGet();
+        TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
+        poolSize.decrementAndGet();
+
         return Response.noContent().build();
     }
 
