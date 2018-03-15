@@ -26,10 +26,15 @@ In this video we are implementing a JWT based authentication for a REST resource
 In this video is showing how to subscribe and broadcast SSE events to all registered clients.
 to calculate Fibonacci numbers async.
 
-| Method | URI | Media Type | Description |
+| Method | URI | Status | Description |
 |--------|-----|--------|-------------|
-| GET    | /api/broadcast | text/event-stream | Get and open the SSE stream of broadcasted messages |
-| POST   | /api/broadcast | application/x-www-form-urlencoded | Send a broadcast message |
+| GET    | /api/metrics | 200 | Get the current metrics registry as JSON |
+| POST   | /api/metrics/timed | 204 | Do a timed POST request, will be recorded in the metrics registry |
+| POST   | /api/metrics/gauge | 204 | Do a gauged POST request, will be recorded in the metrics registry |
+| POST   | /api/metrics/counted | 204 | Do a counted POST request, will be recorded in the metrics registry |
+| GET    | /api/healthcheck | 200 or 500 | Perform a healtcheck and return response |
+| GET    | /admin/metrics | 200 | Get the current metrics using the Dropwizard servlet |
+| GET    | /admin/healthcheck | 200 | Get the current metrics using the Dropwizard servlet |
 
 
 ## Building and Running
@@ -37,6 +42,6 @@ to calculate Fibonacci numbers async.
 ```bash
 $ mvn clean verify
 
-$ docker build -t sse-service:1.0 .
-$ docker run -it -p 8080:8080 sse-service:1.0
+$ docker build -t advanced-service:1.0 .
+$ docker run -it -p 8080:8080 advanced-service:1.0
 ```
