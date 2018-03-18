@@ -1,5 +1,7 @@
 package com.packtpub.javaee8;
 
+import com.packtpub.javaee8.jwt.AuthenticationResource;
+import com.packtpub.javaee8.jwt.JwtAuthzVerifier;
 import com.packtpub.javaee8.metrics.MetricsResource;
 import com.packtpub.javaee8.validation.BooksResource;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -25,9 +27,12 @@ public class JAXRSConfiguration extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
 
-        classes.add(MetricsResource.class);
         classes.add(BooksResource.class);
 
+        classes.add(AuthenticationResource.class);
+        classes.add(JwtAuthzVerifier.class);
+
+        classes.add(MetricsResource.class);
         classes.add(LoggingFeature.class);
 
         return classes;
