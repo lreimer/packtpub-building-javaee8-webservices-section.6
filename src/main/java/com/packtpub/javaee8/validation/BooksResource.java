@@ -2,7 +2,9 @@ package com.packtpub.javaee8.validation;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.*;
@@ -34,14 +36,18 @@ public class BooksResource {
 
     @GET
     @Path("/{isbn}")
-    public Response book(@PathParam("isbn") @Pattern(regexp = "[0-9]{10}") String isbn) {
+    public Response book(@PathParam("isbn") String isbn) {
+        // TODO add validation of ISBN
+
         Book book = Optional.ofNullable(books.get(isbn)).orElseThrow(NotFoundException::new);
         return Response.ok(book).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(@Valid Book book, @Context UriInfo uriInfo) {
+    public Response create(Book book, @Context UriInfo uriInfo) {
+        // TODO add validation of Book
+
         books.put(book.isbn, book);
 
         URI uri = uriInfo.getBaseUriBuilder().path(BooksResource.class).path(book.isbn).build();
@@ -50,10 +56,7 @@ public class BooksResource {
 
     public static class Book {
 
-        @Pattern(regexp = "[0-9]{10}")
         private String isbn;
-
-        @NotBlank
         private String title;
 
         public Book() {
