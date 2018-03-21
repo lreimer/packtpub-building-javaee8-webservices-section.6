@@ -1,8 +1,5 @@
 package com.packtpub.javaee8.tracing;
 
-import com.uber.jaeger.Configuration;
-import io.opentracing.util.GlobalTracer;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
