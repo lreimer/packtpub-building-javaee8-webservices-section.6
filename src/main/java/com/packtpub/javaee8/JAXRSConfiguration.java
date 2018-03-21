@@ -24,8 +24,9 @@ public class JAXRSConfiguration extends Application {
 
         classes.add(BooksResource.class);
 
-        classes.add(AuthenticationResource.class);
-        classes.add(JwtAuthzVerifier.class);
+        // TODO activate us
+        // classes.add(AuthenticationResource.class);
+        // classes.add(JwtAuthzVerifier.class);
 
         return classes;
     }

@@ -20,32 +20,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 @ApplicationScoped
-@JwtAuthz
-@Provider
-public class JwtAuthzVerifier implements ContainerRequestFilter, ContainerResponseFilter {
+public class JwtAuthzVerifier {
 
     static final String AUTHORIZATION_HEADER = "Authorization";
     static final String BEARER_TYPE = "Bearer";
 
     private ThreadLocal<DecodedJWT> decodedJWT = new ThreadLocal<>();
 
-    @Override
-    public void filter(ContainerRequestContext requestContext) {
-        try {
-            String header = getAuthorizationHeader(requestContext);
-            decodeBearerToken(header);
-        } catch (SecurityException e) {
-            requestContext.abortWith(Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .entity(e.getMessage())
-                    .build());
-        }
-    }
-
-    @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        decodedJWT.remove();
-    }
+    // TODO add container request and response filter
 
     @Produces
     @RequestScoped

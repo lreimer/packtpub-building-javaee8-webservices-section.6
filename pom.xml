@@ -26,11 +26,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- TODO activate me
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.3.0</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.slf4j</groupId>

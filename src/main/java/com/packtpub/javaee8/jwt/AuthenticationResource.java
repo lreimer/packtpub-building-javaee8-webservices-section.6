@@ -14,22 +14,8 @@ import java.util.Map;
 
 @RequestScoped
 @Path("/jwt")
-@JwtAuthz
 public class AuthenticationResource {
 
-    @Inject
-    private DecodedJWT decodedJWT;
+    // TODO authenticate decoded JWT
 
-    @GET
-    @Path("/authenticate")
-    public Response authenticate() {
-        Map<String, Claim> claims = decodedJWT.getClaims();
-
-        JsonObject response = Json.createObjectBuilder()
-                .add("name", claims.get("name").asString())
-                .add("subject", claims.get("sub").asString())
-                .build();
-
-        return Response.ok(response).build();
-    }
 }
