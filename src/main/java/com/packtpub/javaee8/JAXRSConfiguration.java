@@ -32,8 +32,9 @@ public class JAXRSConfiguration extends Application {
         classes.add(AuthenticationResource.class);
         classes.add(JwtAuthzVerifier.class);
 
-        classes.add(MetricsResource.class);
-        classes.add(LoggingFeature.class);
+        // TODO activate us
+        // classes.add(LoggingFeature.class);
+        // classes.add(MetricsResource.class);
 
         return classes;
     }
@@ -42,8 +43,7 @@ public class JAXRSConfiguration extends Application {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = new HashMap<>();
 
-        properties.put(LoggingFeature.LOGGING_FEATURE_LOGGER_NAME, "RequestLogger");
-        properties.put(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL, Level.INFO.getName());
+        // TODO add logging properties
 
         return properties;
     }

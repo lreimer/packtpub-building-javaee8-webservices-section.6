@@ -11,7 +11,5 @@ import javax.servlet.annotation.WebListener;
 public class OpenTracingContextInitializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        Configuration configuration = Configuration.fromEnv();
-        GlobalTracer.register(configuration.getTracer());
     }
 }

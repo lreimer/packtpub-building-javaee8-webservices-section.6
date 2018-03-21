@@ -22,7 +22,6 @@ public class MetricsResource {
 
     @POST
     @Path("/timed")
-    @Timed(displayName = "Timed invocation", unit = "milliseconds")
     public Response timed() throws InterruptedException {
         poolSize.incrementAndGet();
         TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
@@ -31,14 +30,12 @@ public class MetricsResource {
         return Response.noContent().build();
     }
 
-    @Gauge(displayName = "Gauge invocation", unit = "seconds")
     public long gauge() {
         return poolSize.get();
     }
 
     @POST
     @Path("/counted")
-    @Counted(monotonic = true)
     public Response counted() throws InterruptedException {
         poolSize.incrementAndGet();
         TimeUnit.MILLISECONDS.sleep(random.nextInt(500));
