@@ -1,4 +1,4 @@
-FROM payara/micro:5-SNAPSHOT
+FROM payara/micro:5.181
 COPY target/advanced-service.war /opt/payara/deployments
 
 ENV JAEGER_SERVICE_NAME advanced-service
